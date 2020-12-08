@@ -1,7 +1,22 @@
+import 'antd/dist/antd.css'
 import '../styles/globals.css'
 
-function MyApp({ Component, pageProps }) {
-  return <Component {...pageProps} />
-}
+import { Provider } from 'react-redux'
+import { persistStore } from 'redux-persist'
+import { PersistGate } from 'redux-persist/integration/react'
+import { wrapper, configStore } from '../redux/store'
+import { Skeleton } from 'antd'
 
-export default MyApp
+
+function MyApp({ Component, pageProps }) {
+  const store = configStore(pageProps.initialReduxState)
+  const persistor = persistStore(store)
+  return (
+    <Provider store={store}>
+      <PersistGate loading={<Skeleton/>} persistor={persistor}>
+        <Component {...pageProps} />
+      </PersistGate>
+    </Provider>
+  )
+}
+export default wrapper.withRedux(MyApp)
