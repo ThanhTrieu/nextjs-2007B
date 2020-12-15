@@ -18,7 +18,7 @@ export default function ListMovie() {
         { loading && (<Skeleton active />)}
         {movies ? movies.map((item, index) => (
           <Col key={index} style={{marginTop: '15px'}} span={4}>
-            <Link href={`${slugify(item.title)}/${item.id}`}>
+            <Link href={`watch/${slugify(item.title)}/${item.id}`}>
               <a>
                 <Card
                   hoverable
