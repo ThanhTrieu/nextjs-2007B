@@ -6,6 +6,8 @@ import * as action from '../../redux/detail_movie/action'
 import { createStructuredSelector } from 'reselect'
 import { Skeleton, Row, Col, Image, Button } from 'antd'
 import ModalVideo from 'react-modal-video'
+import Link from 'next/link'
+import HeadTags from '../../components/header'
 
 export default function WatchingMovie() {
   const [isOpen, setOpen] = useState(false)
@@ -32,6 +34,7 @@ export default function WatchingMovie() {
     <>
       {detailMovie && (
         <Row>
+          <HeadTags title={detailMovie.original_title}/>
           <Col span={6}>
             <Image
               src={`https://image.tmdb.org/t/p/w300${detailMovie.poster_path}`}
@@ -43,6 +46,11 @@ export default function WatchingMovie() {
             <p>{detailMovie.overview}</p>
             <ModalVideo channel='youtube' autoplay isOpen={isOpen} videoId={youtube} onClose={() => setOpen(false)} />
             <Button type="primary" onClick={()=> setOpen(true)}>VIEW TRAILER</Button>
+            <Link href="/movie">
+              <a>
+                <Button style={{ marginLeft: '20px' }} type="primary"> Tim phim </Button>
+              </a>
+            </Link>
           </Col>
           <Col span={6}>
             <Row>
