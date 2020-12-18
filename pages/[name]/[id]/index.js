@@ -1,9 +1,12 @@
 //import { useRouter } from 'next/router'
-import { Row, Col, Image } from 'antd'
+import { useState } from 'react'
+import { Row, Col, Image, Button } from 'antd'
+import ModalVideo from 'react-modal-video'
 
 export default function DetailMovie({ data }){
   // const router = useRouter()
   // const { name, id } = router.query
+  const [isOpen, setOpen] = useState(false)
   return(
     <>
       <Row>
@@ -16,6 +19,8 @@ export default function DetailMovie({ data }){
         <Col span={12} style={{ padding: '20px' }}>
           <h1>{data.title}</h1>
           <p>{data.overview}</p>
+          <ModalVideo channel='youtube' autoplay isOpen={isOpen} videoId={data.videos.results[0].key} onClose={() => setOpen(false)} />
+          <Button type="primary" onClick={()=> setOpen(true)}>VIEW TRAILER</Button>
         </Col>
         <Col span={6}>
           <Row>

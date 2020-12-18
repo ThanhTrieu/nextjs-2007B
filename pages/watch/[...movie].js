@@ -1,19 +1,22 @@
-import { useEffect } from 'react'
+import { useEffect, useState } from 'react'
 import { useRouter } from 'next/router'
 import { useSelector, useDispatch } from 'react-redux'
 import * as reselect from '../../redux/detail_movie/reselect'
 import * as action from '../../redux/detail_movie/action'
 import { createStructuredSelector } from 'reselect'
-import { Skeleton, Row, Col, Image } from 'antd'
+import { Skeleton, Row, Col, Image, Button } from 'antd'
+import ModalVideo from 'react-modal-video'
 
 export default function WatchingMovie() {
+  const [isOpen, setOpen] = useState(false)
   const router = useRouter()
   const params  = router.query.movie || []
   const id = params[1]
 
-  const { loading, detailMovie } = useSelector(createStructuredSelector({
+  const { loading, detailMovie, youtube } = useSelector(createStructuredSelector({
     loading: reselect.getLoading,
-    detailMovie: reselect.getDataDetail
+    detailMovie: reselect.getDataDetail,
+    youtube: reselect.getVideos
   }))
   const dispatch = useDispatch()
 
@@ -24,6 +27,7 @@ export default function WatchingMovie() {
   if(loading){
     return (<Skeleton active />)
   }
+  
   return (
     <>
       {detailMovie && (
@@ -37,6 +41,8 @@ export default function WatchingMovie() {
           <Col span={12} style={{ padding: '20px' }}>
             <h1>{detailMovie.title}</h1>
             <p>{detailMovie.overview}</p>
+            <ModalVideo channel='youtube' autoplay isOpen={isOpen} videoId={youtube} onClose={() => setOpen(false)} />
+            <Button type="primary" onClick={()=> setOpen(true)}>VIEW TRAILER</Button>
           </Col>
           <Col span={6}>
             <Row>

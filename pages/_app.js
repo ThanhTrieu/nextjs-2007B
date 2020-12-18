@@ -1,4 +1,5 @@
 import 'antd/dist/antd.css'
+import 'react-modal-video/css/modal-video.min.css'
 import '../styles/globals.css'
 
 import { Provider } from 'react-redux'
